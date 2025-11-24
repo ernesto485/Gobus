@@ -1,0 +1,42 @@
+/* Login/auth specific styles */
+.auth-wrapper {
+  min-height: calc(100vh - 56px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  color: #fff;
+}
+.brand-badge { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.brand-icon {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+.auth-title { margin: 0; font-weight: 700; }
+label { font-weight: 600; margin-bottom: 6px; }
+input[type="text"], input[type="password"] {
+  width: 100%; border-radius: 10px; border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.9); padding: 12px 14px; outline: none;
+  transition: box-shadow .2s, border-color .2s;
+}
+input[type="text"]:focus, input[type="password"]:focus {
+  border-color: #0d6efd; box-shadow: 0 0 0 4px rgba(13,110,253,.15);
+}
+.btn-modern { border-radius: 10px; padding: 12px 16px; font-weight: 600; }
+.helper { color: rgba(255,255,255,0.85); font-size: .9rem; }
+.errorlist, .text-danger { color: #ffe0e0 !important; }
+.alert-danger { background: rgba(220,53,69,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.25); }
