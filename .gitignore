@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+
+# Django
+*.log
+local_settings.py
+media/
+staticfiles/
+
+# Virtual environments
+venv/
+.env/
+.venv/
+ENV/
+env/
+
+# IDEs / Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Migrations cache (optional)
+*/migrations/__pycache__/
+
+# Coverage / testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Node / front-end (por si se añade en el futuro)
+node_modules/
+.dist/
+.build/
