@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+<link href="{% static 'css/home-modern.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        <span class="gradient-text">Gobus</span>
+        <br>Transporte Inteligente
+      </h1>
+      <p class="hero-subtitle">
+        Gestión moderna y eficiente de tu flota de autobuses con tecnología de última generación
+      </p>
+      <div class="hero-buttons">
+        <a href="{% url 'admin:index' %}" class="btn btn-hero btn-primary">
+          <i class="bi bi-speedometer2 me-2"></i>Panel Admin
+        </a>
+        <a href="#" class="btn btn-hero btn-outline-light">
+          <i class="bi bi-graph-up me-2"></i>Ver Reportes
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="floating-card">
+        <i class="bi bi-bus-front"></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-bus-front-fill"></i>
+          </div>
+          <div class="stat-number">24</div>
+          <div class="stat-label">Autobuses</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-person-badge-fill"></i>
+          </div>
+          <div class="stat-number">48</div>
+          <div class="stat-label">Conductores</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-signpost-2-fill"></i>
+          </div>
+          <div class="stat-number">12</div>
+          <div class="stat-label">Rutas</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-ticket-perforated-fill"></i>
+          </div>
+          <div class="stat-number">1.2k</div>
+          <div class="stat-label">Billetes/Mes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Características Principales</h2>
+      <p class="section-subtitle">Todo lo que necesitas para gestionar tu negocio de transporte</p>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="bi bi-truck feature-icon"></i>
+          </div>
+          <h3 class="feature-title">Gestión de Flota</h3>
+          <p class="feature-description">
+            Control completo de autobuses, mantenimientos programados, disponibilidad en tiempo real y seguimiento GPS.
+          </p>
+          <div class="feature-features">
+            <span class="feature-tag">GPS Tracking</span>
+            <span class="feature-tag">Mantenimiento</span>
+            <span class="feature-tag">Disponibilidad</span>
+          </div>
+          <a href="#" class="btn btn-feature">Explorar <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="bi bi-person-vcard feature-icon"></i>
+          </div>
+          <h3 class="feature-title">Gestión de Conductores</h3>
+          <p class="feature-description">
+            Administra licencias, turnos, asignaciones y rendimiento de conductores con análisis detallados.
+          </p>
+          <div class="feature-features">
+            <span class="feature-tag">Licencias</span>
+            <span class="feature-tag">Turnos</span>
+            <span class="feature-tag">Rendimiento</span>
+          </div>
+          <a href="#" class="btn btn-feature">Explorar <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="bi bi-sign-turn-right feature-icon"></i>
+          </div>
+          <h3 class="feature-title">Rutas y Horarios</h3>
+          <p class="feature-description">
+            Define rutas optimizadas, horarios flexibles y emisión digital de billetes con validación QR.
+          </p>
+          <div class="feature-features">
+            <span class="feature-tag">Rutas</span>
+            <span class="feature-tag">Horarios</span>
+            <span class="feature-tag">QR Tickets</span>
+          </div>
+          <a href="#" class="btn btn-feature">Explorar <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">¿Listo para modernizar tu transporte?</h2>
+      <p class="cta-subtitle">Únete a las empresas que ya confían en Gobus para su gestión diaria</p>
+      <div class="cta-buttons">
+        <a href="{% url 'admin:index' %}" class="btn btn-cta btn-primary">
+          <i class="bi bi-rocket-takeoff me-2"></i>Comenzar Ahora
+        </a>
+        <a href="#" class="btn btn-cta btn-outline-light">
+          <i class="bi bi-play-circle me-2"></i>Ver Demo
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

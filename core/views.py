@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 
 @login_required
 def home(request):
-    return render(request, 'core/home.html')
+    return render(request, 'core/home_modern.html')
 
 
 @require_POST
