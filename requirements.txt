@@ -1,2 +1,5 @@
 # Core Django Framework
 Django==5.2.8
+
+# Production server
+gunicorn==21.2.0
