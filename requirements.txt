@@ -1,0 +1,2 @@
+# Core Django Framework
+Django==5.2.8

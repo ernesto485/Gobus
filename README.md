@@ -18,70 +18,147 @@ GoBus es una aplicación web desarrollada con Django que proporciona una platafo
 - 🎨 **UI/UX Moderna**: Diseño limpio con Bootstrap y estilos personalizados
 - 🛡️ **Protección de Rutas**: Vistas protegidas con decoradores de Django
 
-## 🏗️ Arquitectura del Proyecto
+## 🏗️ Arquitectura del Sistema
 
+GoBus está construido siguiendo las mejores prácticas de Django con una arquitectura modular y escalable:
+
+### **Estructura de Directorios**
 ```
 mi_proyecto/
-├── core/                    # Aplicación principal
+├── core/                    # Aplicación principal de negocio
 │   ├── migrations/         # Migraciones de base de datos
-│   ├── templates/core/     # Templates del core
-│   ├── views.py           # Vistas principales
-│   ├── urls.py            # URLs del core
-│   └── admin.py           # Configuración de admin
-├── mi_proyecto/           # Configuración del proyecto
-│   ├── settings.py        # Configuraciones principales
-│   ├── urls.py           # URLs globales
-│   └── wsgi.py           # Configuración WSGI
-├── templates/             # Templates globales
-│   ├── base.html         # Plantilla base
-│   ├── home.html         # Página principal
-│   └── registration/     # Templates de autenticación
-├── static/               # Archivos estáticos
-│   ├── css/             # Hojas de estilo
+│   ├── templates/core/     # Templates específicos del core
+│   ├── views.py           # Vistas principales y lógica de negocio
+│   ├── urls.py            # Enrutamiento de URLs del core
+│   ├── models.py          # Modelos de datos (cuando se agreguen)
+│   ├── forms.py           # Formularios personalizados
+│   └── admin.py           # Configuración del panel de administración
+├── mi_proyecto/           # Configuración principal del proyecto
+│   ├── settings.py        # Configuraciones globales y de aplicación
+│   ├── urls.py           # Enrutamiento principal de URLs
+│   ├── wsgi.py           # Configuración para despliegue WSGI
+│   └── asgi.py           # Configuración para aplicaciones asíncronas
+├── templates/             # Templates globales compartidos
+│   ├── base.html         # Plantilla base con estructura común
+│   ├── home.html         # Página principal de la aplicación
+│   └── registration/     # Templates del sistema de autenticación
+├── static/               # Archivos estáticos del proyecto
+│   ├── css/             # Hojas de estilo CSS
+│   │   ├── base.css     # Estilos principales
+│   │   ├── auth.css     # Estilos de autenticación
+│   │   └── bootstrap/   # Framework CSS Bootstrap
 │   └── javascript/      # Scripts JavaScript
-└── db.sqlite3           # Base de datos SQLite
+│       └── bootstrap/   # Componentes JavaScript Bootstrap
+└── db.sqlite3           # Base de datos SQLite para desarrollo
 ```
 
-## 🚀 Flujo de Autenticación
+### **Patrones de Diseño Implementados**
 
-### 1. **Proceso de Login**
-```
-Usuario → /accounts/login/ → Formulario → Validación → /home/
-```
+#### **1. MVT (Model-View-Template)**
+- **Models**: Definición de estructura de datos (extensible)
+- **Views**: Lógica de negocio y procesamiento de peticiones
+- **Templates**: Presentación y capa visual
 
-- **URL**: `/accounts/login/`
-- **Template**: `registration/login.html`
-- **Vista**: `django.contrib.auth.views.LoginView`
-- **Redirección**: `LOGIN_REDIRECT_URL = 'home'`
+#### **2. Configuración Modular**
+- Separación clara entre configuración del proyecto y aplicación
+- URLs organizadas jerárquicamente
+- Templates estructurados por aplicación
 
-### 2. **Protección de Vistas**
+#### **3. Sistema de Autenticación Django**
+- Integración nativa con el sistema de usuarios de Django
+- Middleware de autenticación y sesiones
+- Decoradores de protección de vistas
+- Templates personalizados para login/logout
+
+## 🔧 Configuración del Sistema
+
+### **Configuraciones Principales (settings.py)**
+
+#### **Configuración de Autenticación**
 ```python
-@login_required
-def home(request):
-    return render(request, 'core/home.html')
+# URLs de autenticación
+LOGIN_URL = 'login'              # Redirección para usuarios no autenticados
+LOGIN_REDIRECT_URL = 'home'      # Destino después de login exitoso
+LOGOUT_REDIRECT_URL = 'login'    # Destino después de logout
 ```
 
-### 3. **Proceso de Logout**
-```
-Usuario → POST /accounts/logout/ → Cierre de sesión → /accounts/login/
-```
-
-## 🔧 Configuración y Configuraciones Clave
-
-### Configuraciones de Autenticación
+#### **Configuración de Aplicaciones**
 ```python
-# settings.py
-LOGIN_URL = 'login'              # URL para redirección de login
-LOGIN_REDIRECT_URL = 'home'      # URL post-login exitoso
-LOGOUT_REDIRECT_URL = 'login'    # URL post-logout
+INSTALLED_APPS = [
+    'django.contrib.admin',       # Panel de administración
+    'django.contrib.auth',        # Sistema de autenticación
+    'django.contrib.contenttypes', # Tipos de contenido
+    'django.contrib.sessions',    # Manejo de sesiones
+    'django.contrib.messages',     # Sistema de mensajes
+    'django.contrib.staticfiles',  # Archivos estáticos
+    'core',                       # Aplicación principal de negocio
+]
 ```
 
-### Middleware de Autenticación
+#### **Middleware de Procesamiento**
 ```python
 MIDDLEWARE = [
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # ... otros middleware
+    'django.middleware.security.SecurityMiddleware',      # Seguridad
+    'django.contrib.sessions.middleware.SessionMiddleware', # Sesiones
+    'django.middleware.common.CommonMiddleware',           # Utilidades comunes
+    'django.middleware.csrf.CsrfViewMiddleware',         # Protección CSRF
+    'django.contrib.auth.middleware.AuthenticationMiddleware', # Autenticación
+    'django.contrib.messages.middleware.MessageMiddleware', # Mensajes
+    'django.middleware.clickjacking.XFrameOptionsMiddleware', # Clickjacking
+]
+```
+
+#### **Configuración de Templates**
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],  # Directorio de templates global
+        'APP_DIRS': True,                  # Templates por aplicación
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+#### **Configuración de Base de Datos**
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # Motor SQLite
+        'NAME': BASE_DIR / 'db.sqlite3',        # Archivo de base de datos
+    }
+}
+```
+
+#### **Configuración de Archivos Estáticos**
+```python
+STATIC_URL = 'static/'                    # URL para archivos estáticos
+STATICFILES_DIRS = [BASE_DIR / 'static']   # Directorios de archivos estáticos
+```
+
+### **Configuración de URLs**
+
+#### **URLs Principales (mi_proyecto/urls.py)**
+```python
+urlpatterns = [
+    path('admin/', admin.site.urls),                                    # Panel admin
+    path('', include('core.urls')),                                     # URLs del core
+    path('accounts/login/', auth_views.LoginView.as_view(
+        template_name='registration/login.html'), name='login'),        # Login
+    path('accounts/logout/', logout_view, name='logout'),              # Logout
+]
+```
+
+#### **URLs del Core (core/urls.py)**
+```python
+urlpatterns = [
+    path('', views.home, name='home'),  # Página principal protegida
 ]
 ```
 
@@ -110,7 +187,7 @@ MIDDLEWARE = [
 
 3. **Instalar dependencias**
    ```bash
-   pip install django==5.2.8
+   pip install -r requirements.txt
    ```
 
 4. **Migraciones de base de datos**
