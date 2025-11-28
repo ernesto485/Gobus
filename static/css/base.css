@@ -22,6 +22,12 @@ body {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky; /* keep on top while scrolling */
+  top: 0;
+  /* ensure stacking context */
+  z-index: 3000;      /* above page content */
+  overflow: visible;  /* allow dropdown to overflow */
+  isolation: isolate; /* separate stacking context */
 }
 
 .navbar .bi {
@@ -48,4 +54,54 @@ main.container {
 .footer-link:hover { color: #fff; text-decoration: underline; }
 .social a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); color: #fff; text-decoration: none; }
 .social a:hover { background: rgba(255,255,255,0.2); }
+
+/* User dropdown fixes */
+.custom-user-dropdown { position: static !important; }
+.custom-user-dropdown .dropdown-menu {
+  right: 0 !important;
+  left: auto !important;
+  min-width: 180px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  z-index: 4000 !important; /* ensure above navbar and glass */
+}
+
+/* Allow dropdown to overflow the collapsed navbar area */
+.navbar,
+.navbar .container-fluid,
+.navbar-collapse { overflow: visible !important; }
+
+/* Lower stacking of glass content so navbar wins */
+.glass { position: relative; z-index: 0; }
+
+/* Extra safety when menu is open */
+.dropdown-menu.show { z-index: 2000 !important; }
+
+.custom-user-dropdown .dropdown-item {
+  color: rgba(255,255,255,0.9);
+  padding: 0.5rem 1rem;
+}
+
+.custom-user-dropdown .dropdown-item:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.custom-user-dropdown .dropdown-divider {
+  border-color: rgba(255,255,255,0.15);
+}
+
+@media (max-width: 991.98px) {
+  .custom-user-dropdown .dropdown-menu {
+    position: fixed !important;
+    top: auto !important;
+    right: 1rem !important;
+    left: 1rem !important;
+    width: calc(100% - 2rem);
+    min-width: unset;
+  }
+}
 

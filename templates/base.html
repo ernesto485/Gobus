@@ -43,10 +43,10 @@
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item dropdown custom-user-dropdown">
-              <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-boundary="viewport" data-bs-display="static">
                 <i class="bi bi-person-circle"></i> {{ user.username|default:"Usuario" }}
               </a>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="{% url 'admin:index' %}"><i class="bi bi-speedometer2 me-2"></i>Admin</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
@@ -119,5 +119,33 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var userDropdown = document.querySelector('.custom-user-dropdown');
+        if (!userDropdown) return;
+        var toggle = userDropdown.querySelector('[data-bs-toggle="dropdown"]');
+        var menu = userDropdown.querySelector('.dropdown-menu');
+        if (!toggle || !menu) return;
+
+        toggle.addEventListener('shown.bs.dropdown', function () {
+          var rect = toggle.getBoundingClientRect();
+          menu.style.position = 'fixed';
+          menu.style.top = Math.round(rect.bottom) + 'px';
+          menu.style.right = Math.round(window.innerWidth - rect.right) + 'px';
+          menu.style.left = 'auto';
+          menu.style.zIndex = '4000';
+          menu.classList.add('show');
+        });
+
+        toggle.addEventListener('hide.bs.dropdown', function () {
+          // Cleanup inline styles to let Bootstrap reset state
+          menu.style.position = '';
+          menu.style.top = '';
+          menu.style.right = '';
+          menu.style.left = '';
+          menu.style.zIndex = '';
+        });
+      });
+    </script>
   </body>
 </html>
