@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["gobus-production.up.railway.app"]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://gobus-production.up.railway.app",
+]
+
 
 # Application definition
 
