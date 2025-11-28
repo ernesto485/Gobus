@@ -48,3 +48,4 @@ main.container {
 .footer-link:hover { color: #fff; text-decoration: underline; }
 .social a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); color: #fff; text-decoration: none; }
 .social a:hover { background: rgba(255,255,255,0.2); }
+
