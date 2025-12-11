@@ -30,7 +30,7 @@ body {
 }
 
 .hero-title {
-  font-size: 4rem;
+  font-size: 5rem;
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 1.5rem;
@@ -43,6 +43,14 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: gradient-shift 8s ease infinite;
+}
+
+.second-title {
+  font-size: 3rem;
+  background-size: 100% 100%;
+  opacity: 0.2;
+  padding-bottom: 1rem;
+  animation: gradient-shift 8s ease infinite;;
 }
 
 @keyframes gradient-shift {
@@ -109,8 +117,8 @@ body {
 }
 
 .floating-card {
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 30px;
@@ -180,9 +188,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.stat-icon i {
   font-size: 1.5rem;
   color: white;
 }
@@ -396,6 +401,10 @@ body {
   }
   
   .hero-title {
+    font-size: 4rem;
+  }
+
+  .second-title{
     font-size: 2.5rem;
   }
   
@@ -418,6 +427,11 @@ body {
   
   .floating-card i {
     font-size: 3rem;
+  }
+
+  .hero-visual{
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 }
 
