@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'mi_proyecto.urls'
+ROOT_URLCONF = 'gobus.urls'
 
 TEMPLATES = [
     {
@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mi_proyecto.wsgi.application'
+WSGI_APPLICATION = 'gobus.wsgi.application'
 
 
 # Database
