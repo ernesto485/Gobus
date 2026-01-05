@@ -1,0 +1,548 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+<link href="{% static 'css/home-modern.css' %}" rel="stylesheet">
+<style>
+  .detail-container {
+    min-height: 100vh;
+    background: #0a0e27;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+    background-attachment: fixed;
+    padding: 2rem 0;
+  }
+
+  .detail-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .detail-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #ffc107 50%, #667eea 75%, #764ba2 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  .detail-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .ruta-info-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ruta-info-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f093fb, #f5576c, #ffc107);
+  }
+
+  .ruta-main-icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, rgba(240, 147, 251, 0.2), rgba(245, 87, 108, 0.2));
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .ruta-main-icon i {
+    font-size: 3rem;
+    color: white;
+  }
+
+  .ruta-destino {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .info-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .info-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, rgba(240, 147, 251, 0.2), rgba(245, 87, 108, 0.2));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .info-icon i {
+    font-size: 1.2rem;
+    color: white;
+  }
+
+  .info-content {
+    flex: 1;
+  }
+
+  .info-label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .info-value {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .assignments-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .assignments-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .assignment-item {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .assignment-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .assignment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .assignment-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .assignment-status {
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .assignment-status.assigned {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+  }
+
+  .assignment-status.unassigned {
+    background: rgba(108, 117, 125, 0.2);
+    color: #6c757d;
+    border: 1px solid rgba(108, 117, 125, 0.3);
+  }
+
+  .assignment-details {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .assignment-tag {
+    background: rgba(102, 126, 234, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .paradas-section {
+    grid-column: 1 / -1;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .paradas-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ffc107, #f093fb, #f5576c);
+  }
+
+  .paradas-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .parada-item {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: white;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .parada-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .btn-action {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .btn-edit {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+  }
+
+  .btn-edit:hover {
+    background: rgba(255, 193, 7, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .btn-delete {
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+  }
+
+  .btn-delete:hover {
+    background: rgba(220, 53, 69, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .btn-back {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-back:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .empty-billetes {
+    text-align: center;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .empty-billetes i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .detail-content {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .ruta-info-card,
+    .assignments-card,
+    .paradas-section {
+      padding: 1.5rem;
+    }
+
+    .detail-title {
+      font-size: 2rem;
+    }
+
+    .ruta-destino {
+      font-size: 1.5rem;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+    }
+
+    .paradas-section {
+      grid-column: 1;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+  <div class="detail-header">
+    <h1 class="detail-title">{{ title }}</h1>
+  </div>
+
+  <div class="detail-content">
+    <div class="ruta-info-card">
+      <div class="ruta-main-icon">
+        <i class="bi bi-sign-turn-right"></i>
+      </div>
+      
+      <div class="ruta-destino">
+        <i class="bi bi-geo-alt"></i>
+        {{ ruta.origen }} → {{ ruta.destino }}
+      </div>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="bi bi-clock"></i>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Hora de Salida</div>
+            <div class="info-value">{{ ruta.hora_salida|date:"d/m/Y H:i" }}</div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="bi bi-speedometer2"></i>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Distancia</div>
+            <div class="info-value">{{ ruta.distancia }} km</div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="bi bi-arrow-repeat"></i>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Frecuencia</div>
+            <div class="info-value">{{ ruta.frecuencia }}</div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="bi bi-calendar"></i>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Fecha de Registro</div>
+            <div class="info-value">{{ ruta.fecha_creacion|date:"d/m/Y H:i" }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <a href="{% url 'ruta_edit' ruta.pk %}" class="btn-action btn-edit">
+          <i class="bi bi-pencil"></i> Editar
+        </a>
+        <a href="{% url 'ruta_delete' ruta.pk %}" class="btn-action btn-delete">
+          <i class="bi bi-trash"></i> Eliminar
+        </a>
+      </div>
+    </div>
+
+    <div class="assignments-card">
+      <h2 class="section-title">
+        <i class="bi bi-people"></i>
+        Asignaciones
+      </h2>
+      
+      <div class="assignment-item">
+        <div class="assignment-header">
+          <div class="assignment-title">
+            <i class="bi bi-bus-front"></i>
+            Autobus Asignado
+          </div>
+          {% if ruta.autobus %}
+            <span class="assignment-status assigned">Asignado</span>
+          {% else %}
+            <span class="assignment-status unassigned">Sin asignar</span>
+          {% endif %}
+        </div>
+        {% if ruta.autobus %}
+          <div class="assignment-details">
+            <div class="assignment-tag">
+              <i class="bi bi-card-text"></i>
+              {{ ruta.autobus.matricula }}
+            </div>
+            <div class="assignment-tag">
+              <i class="bi bi-truck"></i>
+              {{ ruta.autobus.modelo }}
+            </div>
+            <div class="assignment-tag">
+              <i class="bi bi-people"></i>
+              {{ ruta.autobus.capacidad }} pasajeros
+            </div>
+          </div>
+        {% else %}
+          <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">
+            No hay autobus asignado a esta ruta.
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="assignment-item">
+        <div class="assignment-header">
+          <div class="assignment-title">
+            <i class="bi bi-person-badge"></i>
+            Conductor Asignado
+          </div>
+          {% if ruta.conductor %}
+            <span class="assignment-status assigned">Asignado</span>
+          {% else %}
+            <span class="assignment-status unassigned">Sin asignar</span>
+          {% endif %}
+        </div>
+        {% if ruta.conductor %}
+          <div class="assignment-details">
+            <div class="assignment-tag">
+              <i class="bi bi-person"></i>
+              {{ ruta.conductor.nombre }}
+            </div>
+            <div class="assignment-tag">
+              <i class="bi bi-card-text"></i>
+              {{ ruta.conductor.licencia }}
+            </div>
+          </div>
+        {% else %}
+          <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">
+            No hay conductor asignado a esta ruta.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if ruta.paradas %}
+      <div class="paradas-section">
+        <h2 class="section-title">
+          <i class="bi bi-signpost-2"></i>
+          Paradas Intermedias
+        </h2>
+        
+        <div class="paradas-list">
+          {% for parada in ruta.paradas %}
+            <div class="parada-item">
+              <i class="bi bi-geo-alt-fill"></i>
+              {{ parada }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div style="text-align: center; margin-top: 2rem; padding: 0 2rem;">
+    <a href="{% url 'ruta_list' %}" class="btn-action btn-back" style="max-width: 300px; margin: 0 auto;">
+      <i class="bi bi-arrow-left"></i> Volver a la Lista
+    </a>
+  </div>
+</div>
+{% endblock %}
