@@ -39,20 +39,20 @@
           <tbody>
             {% for autobus in page_obj %}
               <tr>
-                <td>
+                <td data-label="Matrícula">
                   <div class="matricula-cell">
                     <i class="bi bi-bus-front-fill"></i>
                     {{ autobus.matricula }}
                   </div>
                 </td>
-                <td class="modelo-cell">{{ autobus.modelo }}</td>
-                <td>
+                <td class="modelo-cell" data-label="Modelo">{{ autobus.modelo }}</td>
+                <td data-label="Capacidad">
                   <div class="capacidad-badge">
                     <i class="bi bi-people-fill"></i>
                     {{ autobus.capacidad }} pasajeros
                   </div>
                 </td>
-                <td>
+                <td data-label="Acciones">
                   <div class="action-cell">
                     <a href="{% url 'autobus_detail' autobus.pk %}" class="btn-action btn-view">
                       <i class="bi bi-eye"></i> Ver

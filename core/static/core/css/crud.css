@@ -2,55 +2,35 @@
 
 .crud-container {
   min-height: 100vh;
-  background: #0a0e27;
-  background-image:
-    radial-gradient(
-      circle at 20% 50%,
-      rgba(120, 119, 198, 0.3) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 80%,
-      rgba(255, 119, 198, 0.3) 0%,
-      transparent 50%
-    );
-  background-attachment: fixed;
+  background: linear-gradient(180deg, #0b1220 0%, #0f1724 100%);
   padding: 2rem 0;
+  color: #e6eef8;
 }
 
 .page-header {
-  text-align: center;
-  margin-bottom: 3rem;
+  text-align: left;
+  margin-bottom: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .page-title {
-  font-size: 3rem;
-  font-weight: 800;
-  color: white;
-  margin-bottom: 1rem;
-  background: linear-gradient(
-    135deg,
-    #667eea 0%,
-    #764ba2 25%,
-    #f093fb 50%,
-    #f5576c 75%,
-    #4facfe 100%
-  );
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradient-shift 8s ease infinite;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #eef2f7;
+  margin: 0;
 }
 
 .table-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
+  padding: 1rem 1rem 1.25rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(6px);
   overflow: hidden;
   position: relative;
 }
@@ -61,8 +41,8 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+  height: 3px;
+  background: linear-gradient(90deg, rgba(75,108,183,0.9), rgba(90,125,200,0.8));
 }
 
 .modern-table {
@@ -72,22 +52,22 @@
   overflow: hidden;
 }
 .modern-table thead {
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(255,255,255,0.02);
 }
 .modern-table th {
-  padding: 1.5rem;
+  padding: 1.1rem 1rem;
   text-align: left;
-  color: white;
+  color: rgba(230,238,248,0.95);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
 }
 .modern-table td {
-  padding: 1.2rem 1.5rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1rem;
+  padding: 1rem 1rem;
+  color: rgba(230,238,248,0.95);
+  font-size: 0.98rem;
 }
 
 .matricula-cell {
@@ -105,13 +85,13 @@
 .capacidad-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  background: rgba(102, 126, 234, 0.2);
-  color: rgba(255, 255, 255, 0.9);
-  padding: 0.4rem 0.8rem;
-  border-radius: 15px;
-  font-size: 0.85rem;
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  gap: 0.4rem;
+  background: rgba(255,255,255,0.02);
+  color: rgba(230,238,248,0.95);
+  padding: 0.45rem 0.85rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255,255,255,0.04);
 }
 
 .action-cell {
@@ -121,30 +101,30 @@
   flex-wrap: wrap;
 }
 .btn-action {
-  padding: 0.4rem 0.8rem;
-  border-radius: 12px;
+  padding: 0.45rem 0.9rem;
+  border-radius: 10px;
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.8rem;
-  transition: all 0.3s ease;
+  font-size: 0.85rem;
+  transition: all 0.18s ease;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.4rem;
 }
 .btn-view {
-  background: rgba(102, 126, 234, 0.2);
-  color: #667eea;
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  background: transparent;
+  color: rgba(75,108,183,1);
+  border: 1px solid rgba(75,108,183,0.12);
 }
 .btn-edit {
-  background: rgba(255, 193, 7, 0.2);
-  color: #ffc107;
-  border: 1px solid rgba(255, 193, 7, 0.3);
+  background: transparent;
+  color: rgba(201,170,0,0.95);
+  border: 1px solid rgba(201,170,0,0.08);
 }
 .btn-delete {
-  background: rgba(220, 53, 69, 0.2);
-  color: #dc3545;
-  border: 1px solid rgba(220, 53, 69, 0.3);
+  background: transparent;
+  color: rgba(220,53,69,0.95);
+  border: 1px solid rgba(220,53,69,0.08);
 }
 .btn-create {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -202,6 +182,43 @@
 
 .table-responsive {
   overflow-x: auto;
+}
+
+/* Mobile: convert rows to card-like blocks using data-label on td */
+@media (max-width: 768px) {
+  .table-responsive {
+    overflow: visible;
+  }
+  .modern-table thead {
+    display: none;
+  }
+  .modern-table, .modern-table tbody, .modern-table tr, .modern-table td {
+    display: block;
+    width: 100%;
+  }
+  .modern-table tr {
+    margin-bottom: 0.9rem;
+    background: rgba(255,255,255,0.02);
+    border-radius: 10px;
+    padding: 0.6rem 0.75rem;
+  }
+  .modern-table td {
+    padding: 0.45rem 0.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: none;
+  }
+  .modern-table td::before {
+    content: attr(data-label);
+    color: rgba(230,238,248,0.75);
+    font-weight: 700;
+    margin-right: 0.6rem;
+    flex: 0 0 auto;
+  }
+  .modern-table td .action-cell {
+    justify-content: flex-end;
+  }
 }
 
 @media (max-width: 768px) {

@@ -42,19 +42,19 @@
           <tbody>
             {% for ruta in page_obj %}
               <tr>
-                <td>
+                <td data-label="Ruta">
                   <div class="ruta-cell">
                     <i class="bi bi-sign-turn-right"></i>
                     {{ ruta.origen }} → {{ ruta.destino }}
                   </div>
                 </td>
-                <td>
+                <td data-label="Hora Salida">
                   <div class="hora-cell">
                     <i class="bi bi-clock"></i>
                     {{ ruta.hora_salida|date:"d/m/Y H:i" }}
                   </div>
                 </td>
-                <td>
+                <td data-label="Distancia">
                   <div class="tags-cell">
                     <div class="ruta-tag distance">
                       <i class="bi bi-speedometer2"></i>
@@ -62,7 +62,7 @@
                     </div>
                   </div>
                 </td>
-                <td>
+                <td data-label="Frecuencia">
                   <div class="tags-cell">
                     <div class="ruta-tag frecuencia">
                       <i class="bi bi-arrow-repeat"></i>
@@ -70,7 +70,7 @@
                     </div>
                   </div>
                 </td>
-                <td>
+                <td data-label="Asignaciones">
                   <div class="assignments-cell">
                     {% if ruta.autobus %}
                       <div class="assignment-badge assigned">
@@ -97,7 +97,8 @@
                     {% endif %}
                   </div>
                 </td>
-                <td>
+                </td>
+                <td data-label="Paradas">
                   <div class="paradas-cell">
                     {% if ruta.paradas %}
                       <div class="paradas-list">
@@ -112,7 +113,7 @@
                     {% endif %}
                   </div>
                 </td>
-                <td>
+                <td data-label="Acciones">
                   <div class="action-cell">
                     <a href="{% url 'ruta_detail' ruta.pk %}" class="btn-action btn-view">
                       <i class="bi bi-eye"></i> Ver
