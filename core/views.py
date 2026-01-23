@@ -5,9 +5,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
 from django.core.paginator import Paginator
-from .models import Autobus, Ruta
-from .forms import AutobusForm, RutaForm
-
+from .models import Autobus, Ruta, Conductor
+from .forms import AutobusForm, RutaForm, ConductorForm
 
 @login_required
 def home(request):
@@ -190,3 +189,87 @@ def ruta_detail(request, pk):
         'title': f'Detalles de la Ruta {ruta.origen} → {ruta.destino}'
     }
     return render(request, 'core/ruta/ruta_detail.html', context)
+
+
+# CRUD Views for Conductor
+@login_required
+def conductor_list(request):
+    conductores = Conductor.objects.all().order_by('nombre')
+    paginator = Paginator(conductores, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        'title': 'Gestión de Conductores'
+    }
+    return render(request, 'core/conductores/conductor_list.html', context)
+
+
+@login_required
+def conductor_create(request):
+    if request.method == 'POST':
+        form = ConductorForm(request.POST)
+        if form.is_valid():
+            conductor = form.save()
+            messages.success(request, f'Conductor {conductor.nombre} creado exitosamente.')
+            return redirect('conductor_list')
+    else:
+        form = ConductorForm()
+
+    context = {
+        'form': form,
+        'title': 'Crear Conductor',
+        'action': 'Crear'
+    }
+    return render(request, 'core/conductores/conductor_form.html', context)
+
+
+@login_required
+def conductor_edit(request, pk):
+    conductor = get_object_or_404(Conductor, pk=pk)
+
+    if request.method == 'POST':
+        form = ConductorForm(request.POST, instance=conductor)
+        if form.is_valid():
+            conductor = form.save()
+            messages.success(request, f'Conductor {conductor.nombre} actualizado exitosamente.')
+            return redirect('conductor_list')
+    else:
+        form = ConductorForm(instance=conductor)
+
+    context = {
+        'form': form,
+        'conductor': conductor,
+        'title': 'Editar Conductor',
+        'action': 'Actualizar'
+    }
+    return render(request, 'core/conductores/conductor_form.html', context)
+
+
+@login_required
+def conductor_delete(request, pk):
+    conductor = get_object_or_404(Conductor, pk=pk)
+
+    if request.method == 'POST':
+        nombre = conductor.nombre
+        conductor.delete()
+        messages.success(request, f'Conductor {nombre} eliminado exitosamente.')
+        return redirect('conductor_list')
+
+    context = {
+        'conductor': conductor,
+        'title': 'Eliminar Conductor'
+    }
+    return render(request, 'core/conductores/conductor_confirm_delete.html', context)
+
+
+@login_required
+def conductor_detail(request, pk):
+    conductor = get_object_or_404(Conductor, pk=pk)
+
+    context = {
+        'conductor': conductor,
+        'title': f'Detalles del Conductor {conductor.nombre}'
+    }
+    return render(request, 'core/conductores/conductor_detail.html', context)

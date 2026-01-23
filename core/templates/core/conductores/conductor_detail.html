@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+<link href="{% static 'core/css/home-modern.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/crud.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+  <div class="detail-header">
+    <h1 class="detail-title">{{ title }}</h1>
+  </div>
+
+  <div class="detail-content">
+    <div class="conductor-info-card">
+      <div class="conductor-main-icon">
+        <i class="bi bi-person-badge"></i>
+      </div>
+      
+      <div class="conductor-name">{{ conductor.nombre }}</div>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="bi bi-card-text"></i>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Licencia</div>
+            <div class="info-value">{{ conductor.licencia }}</div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="bi bi-calendar"></i>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Fecha de Registro</div>
+            <div class="info-value">{{ conductor.fecha_creacion|date:"d/m/Y H:i" }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <a href="{% url 'conductor_edit' conductor.pk %}" class="btn-action btn-edit">
+          <i class="bi bi-pencil"></i> Editar
+        </a>
+        <a href="{% url 'conductor_delete' conductor.pk %}" class="btn-action btn-delete">
+          <i class="bi bi-trash"></i> Eliminar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 2rem; padding: 0 2rem;">
+    <a href="{% url 'conductor_list' %}" class="btn-action btn-back" style="max-width: 300px; margin: 0 auto;">
+      <i class="bi bi-arrow-left"></i> Volver a la Lista
+    </a>
+  </div>
+</div>
+{% endblock %}

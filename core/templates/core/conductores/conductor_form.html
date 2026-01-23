@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+<link href="{% static 'core/css/home-modern.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/crud.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-icon">
+      <i class="bi bi-person-badge"></i>
+    </div>
+    
+    <div class="form-header">
+      <h1 class="form-title">{{ title }}</h1>
+      <p class="form-subtitle">
+        {% if conductor %}
+          Modifica los datos del conductor {{ conductor.nombre }}
+        {% else %}
+          Ingresa los datos para registrar un nuevo conductor
+        {% endif %}
+      </p>
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <label for="{{ form.nombre.id_for_label }}" class="form-label">
+          <i class="bi bi-person"></i> Nombre
+        </label>
+        {{ form.nombre }}
+        {% if form.nombre.errors %}
+          {{ form.nombre.errors }}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.licencia.id_for_label }}" class="form-label">
+          <i class="bi bi-card-text"></i> Licencia
+        </label>
+        {{ form.licencia }}
+        {% if form.licencia.errors %}
+          {{ form.licencia.errors }}
+        {% endif %}
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">
+          <i class="bi bi-check-circle"></i>
+          {{ action }}
+        </button>
+        <a href="{% url 'conductor_list' %}" class="btn-cancel">
+          <i class="bi bi-arrow-left"></i>
+          Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

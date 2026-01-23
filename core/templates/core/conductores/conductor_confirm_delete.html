@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+<link href="{% static 'core/css/home-modern.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/crud.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="delete-container">
+  <div class="delete-card">
+    <div class="delete-icon">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+    </div>
+    
+    <h1 class="delete-title">{{ title }}</h1>
+    <p class="delete-message">
+      ¿Estás seguro de que deseas eliminar este conductor? Esta acción no se puede deshacer.
+    </p>
+
+    <div class="conductor-info">
+      <div class="info-row">
+        <span class="info-label">Nombre:</span>
+        <span class="info-value">{{ conductor.nombre }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Licencia:</span>
+        <span class="info-value">{{ conductor.licencia }}</span>
+      </div>
+    </div>
+
+    <form method="post" class="delete-form">
+      {% csrf_token %}
+      <button type="submit" class="btn-confirm">
+        <i class="bi bi-trash"></i>
+        Sí, Eliminar Conductor
+      </button>
+      <a href="{% url 'conductor_detail' conductor.pk %}" class="btn-cancel">
+        <i class="bi bi-x-circle"></i>
+        Cancelar
+      </a>
+    </form>
+  </div>
+</div>
+{% endblock %}
