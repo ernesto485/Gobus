@@ -10,7 +10,19 @@ from .forms import AutobusForm, RutaForm, ConductorForm, BilleteForm
 
 @login_required
 def home(request):
-    return render(request, 'core/home_modern.html')
+    num_autobuses = Autobus.objects.count()
+    num_rutas = Ruta.objects.count()
+    num_conductores = 48  # valor fijo por ahora
+    num_billetes_mes = 0   # si no hay modelo Billete, dejar 0 o un valor fijo
+
+    context = {
+        'num_autobuses': num_autobuses,
+        'num_rutas': num_rutas,
+        'num_conductores': num_conductores,
+        'num_billetes_mes': num_billetes_mes,
+    }
+
+    return render(request, 'core/home_modern.html', context)
 
 
 @require_POST
