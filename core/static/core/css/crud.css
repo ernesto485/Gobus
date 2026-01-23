@@ -26,14 +26,32 @@
 .table-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 1rem 1.25rem 1rem;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(6px);
+  padding: 1.5rem;
+  /* Un poco más de espacio interno */
+
+  /* CAMBIO PRINCIPAL: Fondo con degradado sutil en lugar de plano */
+  background: linear-gradient(145deg,
+      rgba(30, 41, 59, 0.7) 0%,
+      rgba(15, 23, 42, 0.6) 100%);
+
+  /* Efecto de cristal más fuerte */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  /* Bordes y sombras para dar volumen (evita que se vea plano) */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  /* Sombra profunda */
+
   overflow: hidden;
   position: relative;
+  transition: transform 0.3s ease;
 }
+
 
 .table-container::before {
   content: "";
@@ -41,8 +59,13 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, rgba(75,108,183,0.9), rgba(90,125,200,0.8));
+  height: 2px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      #667eea 50%,
+      transparent 100%);
+  opacity: 0.8;
+  box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
 }
 
 .modern-table {
@@ -68,6 +91,63 @@
   padding: 1rem 1rem;
   color: rgba(230,238,248,0.95);
   font-size: 0.98rem;
+}
+.modern-table tbody tr {
+  transition: all 0.2s ease-in-out;
+  border-radius: 8px;
+  /* Nota: funciona mejor si border-collapse es separate */
+}
+
+.modern-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: scale(1.005);
+  /* Efecto sutil de zoom */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: default;
+}
+
+.modern-table thead {
+  background: rgba(11, 18, 32, 0.6);
+  /* Fondo más oscuro para el header */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modern-table th {
+  padding: 1.2rem 1rem;
+  color: #94a3b8;
+  /* Color gris azulado más suave */
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modern-table td[data-label="Acciones"],
+.modern-table th:nth-child(7) {
+  width: 180px;
+  text-align: center;
+}
+
+.modern-table td[data-label="Acciones"],
+.modern-table th:nth-child(7) {
+  width: 160px;
+  text-align: center;
+}
+
+/* En móviles: solo íconos */
+@media (max-width: 576px) {
+  .btn-action {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .btn-action i {
+    margin-right: 0;
+  }
+
+  .btn-action::after {
+    content: "";
+  }
 }
 
 .matricula-cell {
@@ -101,16 +181,22 @@
   flex-wrap: wrap;
 }
 .btn-action {
-  padding: 0.45rem 0.9rem;
+  padding: 0.35rem 0.7rem;
   border-radius: 10px;
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.80rem;
   transition: all 0.18s ease;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  
+  min-width: 70px;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
 }
+
 .btn-view {
   background: transparent;
   color: rgba(75,108,183,1);
@@ -561,6 +647,8 @@
   padding: 0.8rem 1rem;
   border-radius: 12px;
 }
+
+
 
 
 
