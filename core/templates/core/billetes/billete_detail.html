@@ -12,77 +12,80 @@
     <h1 class="detail-title">{{ title }}</h1>
   </div>
 
-  <div class="detail-content">
-    <div class="billete-info-card">
-      <div class="billete-main-icon">
-        <i class="bi bi-ticket-perforated"></i>
-      </div>
-      
-      <div class="info-grid">
-        <div class="info-item">
-          <div class="info-icon"><i class="bi bi-person"></i></div>
-          <div class="info-content">
-            <div class="info-label">Usuario</div>
-            <div class="info-value">{{ billete.usuario.username }}</div>
-          </div>
+  <div class="glass-card">
+    <div class="main-icon-circle">
+      <i class="bi bi-ticket-perforated"></i>
+    </div>
+    
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h2 style="color: white; margin: 0;">Ticket #{{ billete.pk }}</h2>
+      <span style="color: #667eea; font-size: 0.9rem;">Estado: Activo</span>
+    </div>
+    
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-person"></i></div>
+        <div class="info-content">
+          <span class="info-label">Pasajero</span>
+          <div class="info-value">{{ billete.usuario.username }}</div>
         </div>
-
-        <div class="info-item">
-          <div class="info-icon"><i class="bi bi-sign-turn-right"></i></div>
-          <div class="info-content">
-            <div class="info-label">Ruta</div>
-            <div class="info-value">{{ billete.ruta.origen }} → {{ billete.ruta.destino }}</div>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <div class="info-icon"><i class="bi bi-chair"></i></div>
-          <div class="info-content">
-            <div class="info-label">Asiento</div>
-            <div class="info-value">{{ billete.asiento }}</div>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <div class="info-icon"><i class="bi bi-cash"></i></div>
-          <div class="info-content">
-            <div class="info-label">Precio</div>
-            <div class="info-value">{{ billete.precio }} CUP</div>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <div class="info-icon"><i class="bi bi-calendar"></i></div>
-          <div class="info-content">
-            <div class="info-label">Fecha de Compra</div>
-            <div class="info-value">{{ billete.fecha_compra|date:"d/m/Y H:i" }}</div>
-          </div>
-        </div>
-
-        {% if billete.codigo_qr %}
-        <div class="info-item">
-          <div class="info-icon"><i class="bi bi-qr-code"></i></div>
-          <div class="info-content">
-            <div class="info-label">Código QR</div>
-            <div class="info-value">{{ billete.codigo_qr }}</div>
-          </div>
-        </div>
-        {% endif %}
       </div>
 
-      <div class="action-buttons">
-        <a href="{% url 'billete_edit' billete.pk %}" class="btn-action btn-edit">
-          <i class="bi bi-pencil"></i> Editar
-        </a>
-        <a href="{% url 'billete_delete' billete.pk %}" class="btn-action btn-delete">
-          <i class="bi bi-trash"></i> Eliminar
-        </a>
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-sign-turn-right"></i></div>
+        <div class="info-content">
+          <span class="info-label">Ruta</span>
+          <div class="info-value">{{ billete.ruta.origen }} &rarr; {{ billete.ruta.destino }}</div>
+        </div>
       </div>
+
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-chair"></i></div>
+        <div class="info-content">
+          <span class="info-label">Asiento Asignado</span>
+          <div class="info-value">Nº {{ billete.asiento }}</div>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-cash-coin"></i></div>
+        <div class="info-content">
+          <span class="info-label">Precio Pagado</span>
+          <div class="info-value">{{ billete.precio }} CUP</div>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-calendar-check"></i></div>
+        <div class="info-content">
+          <span class="info-label">Fecha de Compra</span>
+          <div class="info-value">{{ billete.fecha_compra|date:"d/m/Y H:i" }}</div>
+        </div>
+      </div>
+
+      {% if billete.codigo_qr %}
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-qr-code"></i></div>
+        <div class="info-content">
+          <span class="info-label">Código Digital</span>
+          <div class="info-value" style="font-size: 0.9rem; word-break: break-all;">{{ billete.codigo_qr }}</div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="action-buttons">
+      <a href="{% url 'billete_edit' billete.pk %}" class="btn-action btn-edit">
+        <i class="bi bi-pencil"></i> Editar
+      </a>
+      <a href="{% url 'billete_delete' billete.pk %}" class="btn-action btn-delete">
+        <i class="bi bi-trash"></i> Eliminar
+      </a>
     </div>
   </div>
 
-  <div style="text-align: center; margin-top: 2rem; padding: 0 2rem;">
-    <a href="{% url 'billete_list' %}" class="btn-action btn-back" style="max-width: 300px; margin: 0 auto;">
+  <div style="text-align: center; margin-top: 1rem;">
+    <a href="{% url 'billete_list' %}" class="btn-action btn-view">
       <i class="bi bi-arrow-left"></i> Volver a la Lista
     </a>
   </div>

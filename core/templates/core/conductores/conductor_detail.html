@@ -12,50 +12,118 @@
     <h1 class="detail-title">{{ title }}</h1>
   </div>
 
-  <div class="detail-content">
-    <div class="conductor-info-card">
-      <div class="conductor-main-icon">
-        <i class="bi bi-person-badge"></i>
-      </div>
-      
-      <div class="conductor-name">{{ conductor.nombre }}</div>
-      
-      <div class="info-grid">
-        <div class="info-item">
-          <div class="info-icon">
-            <i class="bi bi-card-text"></i>
-          </div>
-          <div class="info-content">
-            <div class="info-label">Licencia</div>
-            <div class="info-value">{{ conductor.licencia }}</div>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <div class="info-icon">
-            <i class="bi bi-calendar"></i>
-          </div>
-          <div class="info-content">
-            <div class="info-label">Fecha de Registro</div>
-            <div class="info-value">{{ conductor.fecha_creacion|date:"d/m/Y H:i" }}</div>
-          </div>
+  <div class="glass-card">
+    <div class="main-icon-circle">
+      <i class="bi bi-person-vcard"></i>
+    </div>
+    
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h2 style="color: white; margin: 0;">{{ conductor.nombre }}</h2>
+      <span style="color: #667eea; font-size: 0.9rem;">ID: #{{ conductor.pk }}</span>
+    </div>
+    
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-card-heading"></i></div>
+        <div class="info-content">
+          <span class="info-label">Tipo de Licencia</span>
+          <div class="info-value">{{ conductor.licencia }}</div>
         </div>
       </div>
 
-      <div class="action-buttons">
-        <a href="{% url 'conductor_edit' conductor.pk %}" class="btn-action btn-edit">
-          <i class="bi bi-pencil"></i> Editar
-        </a>
-        <a href="{% url 'conductor_delete' conductor.pk %}" class="btn-action btn-delete">
-          <i class="bi bi-trash"></i> Eliminar
-        </a>
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-calendar-check"></i></div>
+        <div class="info-content">
+          <span class="info-label">Registrado el</span>
+          <div class="info-value">{{ conductor.fecha_creacion|date:"d/m/Y" }}</div>
+        </div>
       </div>
+      
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-sign-turn-right"></i></div>
+        <div class="info-content">
+          <span class="info-label">Rutas Asignadas</span>
+          <div class="info-value">{{ conductor.ruta_set.count }} Activas</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a href="{% url 'conductor_edit' conductor.pk %}" class="btn-action btn-edit">
+        <i class="bi bi-pencil"></i> Editar Datos
+      </a>
+      <a href="{% url 'conductor_delete' conductor.pk %}" class="btn-action btn-delete">
+        <i class="bi bi-trash"></i> Eliminar
+      </a>
     </div>
   </div>
 
-  <div style="text-align: center; margin-top: 2rem; padding: 0 2rem;">
-    <a href="{% url 'conductor_list' %}" class="btn-action btn-back" style="max-width: 300px; margin: 0 auto;">
-      <i class="bi bi-arrow-left"></i> Volver a la Lista
+<div class="glass-card">
+    <h3 class="section-title">
+      <i class="bi bi-bus-front"></i>
+      Historial de Asignaciones
+    </h3>
+
+    {# INTENTO 1: Probamos con 'rutas' (nombre común personalizado) #}
+    {% with historial=conductor.rutas.all %}
+      
+      {# Si 'rutas' falla o está vacío, intentamos el default 'ruta_set' #}
+      {% if not historial and conductor.ruta_set.all %}
+          {% with fallback=conductor.ruta_set.all %}
+             {% include "snippets/conductor_rutas_loop.html" with lista_rutas=fallback %}
+          {% endwith %}
+      
+      {# Si 'rutas' funciona #}
+      {% elif historial %}
+          {% for ruta in historial %}
+            <div class="list-item-card">
+              <div style="flex: 1; min-width: 200px;">
+                <div class="info-label">Ruta Asignada</div>
+                <div class="info-value" style="display: flex; align-items: center; gap: 0.5rem;">
+                  <i class="bi bi-geo-alt" style="color: #f093fb;"></i> 
+                  {{ ruta.origen }} <i class="bi bi-arrow-right-short"></i> {{ ruta.destino }}
+                </div>
+              </div>
+
+              <div style="flex: 1; min-width: 200px;">
+                <div class="info-label">Autobus</div>
+                {% if ruta.autobus %}
+                  <div class="info-value">
+                    {{ ruta.autobus.matricula }} <span style="font-size: 0.85rem; color: rgba(255,255,255,0.5);">({{ ruta.autobus.modelo }})</span>
+                  </div>
+                {% else %}
+                  <div class="info-value" style="color: #ff6a6a; font-size: 0.9rem;">
+                    <i class="bi bi-exclamation-circle"></i> Sin asignar
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="tag-group">
+                <div class="data-tag">
+                  <i class="bi bi-clock"></i> {{ ruta.hora_salida|date:"H:i" }}
+                </div>
+              </div>
+              
+              <a href="{% url 'ruta_detail' ruta.pk %}" class="btn-action btn-view" style="margin-left: auto;">
+                <i class="bi bi-eye"></i>
+              </a>
+            </div>
+          {% endfor %}
+
+      {% else %}
+        <div class="empty-state" style="padding: 2rem; text-align: center;">
+          <i class="bi bi-calendar-x" style="font-size: 2rem; opacity: 0.5;"></i>
+          <p>No se encontraron rutas vinculadas a este conductor.</p>
+          <small style="color: #667eea;">Nota para el desarrollador: Verifica el "related_name" en models.py</small>
+        </div>
+      {% endif %}
+
+    {% endwith %}
+  </div>
+
+  <div style="text-align: center; margin-top: 1rem;">
+    <a href="{% url 'conductor_list' %}" class="btn-action btn-view">
+      <i class="bi bi-arrow-left"></i> Volver al Listado
     </a>
   </div>
 </div>
