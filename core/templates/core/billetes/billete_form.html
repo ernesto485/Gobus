@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+<link href="{% static 'core/css/home-modern.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/crud.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-icon">
+      <i class="bi bi-ticket-perforated"></i>
+    </div>
+    
+    <div class="form-header">
+      <h1 class="form-title">{{ title }}</h1>
+      <p class="form-subtitle">
+        {% if billete %}
+          Modifica los datos del billete #{{ billete.id }}
+        {% else %}
+          Ingresa los datos para registrar un nuevo billete
+        {% endif %}
+      </p>
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <label for="{{ form.usuario.id_for_label }}" class="form-label">
+          <i class="bi bi-person"></i> Usuario
+        </label>
+        {{ form.usuario }}
+        {% if form.usuario.errors %}
+          {{ form.usuario.errors }}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.ruta.id_for_label }}" class="form-label">
+          <i class="bi bi-sign-turn-right"></i> Ruta
+        </label>
+        {{ form.ruta }}
+        {% if form.ruta.errors %}
+          {{ form.ruta.errors }}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.asiento.id_for_label }}" class="form-label">
+          <i class="bi bi-chair"></i> Asiento
+        </label>
+        {{ form.asiento }}
+        {% if form.asiento.errors %}
+          {{ form.asiento.errors }}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.precio.id_for_label }}" class="form-label">
+          <i class="bi bi-cash"></i> Precio
+        </label>
+        {{ form.precio }}
+        {% if form.precio.errors %}
+          {{ form.precio.errors }}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.codigo_qr.id_for_label }}" class="form-label">
+          <i class="bi bi-qr-code"></i> Código QR
+        </label>
+        {{ form.codigo_qr }}
+        {% if form.codigo_qr.errors %}
+          {{ form.codigo_qr.errors }}
+        {% endif %}
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">
+          <i class="bi bi-check-circle"></i>
+          {{ action }}
+        </button>
+        <a href="{% url 'billete_list' %}" class="btn-cancel">
+          <i class="bi bi-arrow-left"></i>
+          Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block head_extra %}
 <link href="{% static 'core/css/home-modern.css' %}" rel="stylesheet">
 <link href="{% static 'core/css/crud.css' %}" rel="stylesheet">
@@ -12,106 +11,76 @@
     <h1 class="detail-title">{{ title }}</h1>
   </div>
 
-  <div class="detail-content">
-    <div class="autobus-info-card">
-      <div class="autobus-main-icon">
-        <i class="bi bi-bus-front-fill"></i>
-      </div>
-      
-      <div class="autobus-matricula">{{ autobus.matricula }}</div>
-      
-      <div class="info-grid">
-        <div class="info-item">
-          <div class="info-icon">
-            <i class="bi bi-truck"></i>
-          </div>
-          <div class="info-content">
-            <div class="info-label">Modelo</div>
-            <div class="info-value">{{ autobus.modelo }}</div>
-          </div>
-        </div>
+  <div class="glass-card">
+    <div class="main-icon-circle">
+      <i class="bi bi-bus-front-fill"></i>
+    </div>
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="color: white; margin: 0;">{{ autobus.matricula }}</h2>
+    </div>
 
-        <div class="info-item">
-          <div class="info-icon">
-            <i class="bi bi-people"></i>
-          </div>
-          <div class="info-content">
-            <div class="info-label">Capacidad</div>
-            <div class="info-value">{{ autobus.capacidad }} pasajeros</div>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <div class="info-icon">
-            <i class="bi bi-calendar"></i>
-          </div>
-          <div class="info-content">
-            <div class="info-label">Fecha de Registro</div>
-            <div class="info-value">{{ autobus.fecha_creacion|date:"d/m/Y H:i" }}</div>
-          </div>
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-truck"></i></div>
+        <div class="info-content">
+          <span class="info-label">Modelo</span>
+          <div class="info-value">{{ autobus.modelo }}</div>
         </div>
       </div>
-
-      <div class="action-buttons">
-        <a href="{% url 'autobus_edit' autobus.pk %}" class="btn-action btn-edit">
-          <i class="bi bi-pencil"></i> Editar
-        </a>
-        <a href="{% url 'autobus_delete' autobus.pk %}" class="btn-action btn-delete">
-          <i class="bi bi-trash"></i> Eliminar
-        </a>
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-people"></i></div>
+        <div class="info-content">
+          <span class="info-label">Capacidad Total</span>
+          <div class="info-value">{{ autobus.capacidad }} pasajeros</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-calendar-plus"></i></div>
+        <div class="info-content">
+          <span class="info-label">Alta en Sistema</span>
+          <div class="info-value">{{ autobus.fecha_creacion|date:"d/m/Y" }}</div>
+        </div>
       </div>
     </div>
 
-    <div class="rutas-card">
-      <h2 class="section-title">
-        <i class="bi bi-sign-turn-right"></i>
-        Rutas Asignadas
-      </h2>
-      
-      {% if rutas %}
-        {% for ruta in rutas %}
-          <div class="ruta-item">
-            <div class="ruta-header">
-              <div class="ruta-origen-destino">
-                <i class="bi bi-geo-alt"></i>
-                {{ ruta.origen }} → {{ ruta.destino }}
-              </div>
-              <div class="ruta-hora">
-                <i class="bi bi-clock"></i>
-                {{ ruta.hora_salida|date:"H:i" }}
-              </div>
-            </div>
-            <div class="ruta-details">
-              <div class="ruta-tag">
-                <i class="bi bi-speedometer2"></i>
-                {{ ruta.distancia }} km
-              </div>
-              <div class="ruta-tag">
-                <i class="bi bi-arrow-repeat"></i>
-                {{ ruta.frecuencia }}
-              </div>
-              {% if ruta.conductor %}
-                <div class="ruta-tag">
-                  <i class="bi bi-person-badge"></i>
-                  {{ ruta.conductor.nombre }}
-                </div>
-              {% endif %}
-            </div>
-          </div>
-        {% endfor %}
-      {% else %}
-        <div class="empty-rutas">
-          <i class="bi bi-signpost-2"></i>
-          <p>Este autobus no tiene rutas asignadas</p>
-        </div>
-      {% endif %}
+    <div class="action-buttons">
+      <a href="{% url 'autobus_edit' autobus.pk %}" class="btn-action btn-edit"><i class="bi bi-pencil"></i> Editar</a>
+      <a href="{% url 'autobus_delete' autobus.pk %}" class="btn-action btn-delete"><i class="bi bi-trash"></i> Eliminar</a>
     </div>
   </div>
 
-  <div style="text-align: center; margin-top: 2rem; padding: 0 2rem;">
-    <a href="{% url 'autobus_list' %}" class="btn-action btn-back" style="max-width: 300px; margin: 0 auto;">
-      <i class="bi bi-arrow-left"></i> Volver a la Lista
-    </a>
+  <div class="glass-card">
+    <h3 class="section-title"><i class="bi bi-map"></i> Rutas Asignadas</h3>
+    {% if rutas %}
+      {% for ruta in rutas %}
+        <div class="list-item-card">
+            <div>
+                <div class="info-label">Destino</div>
+                <div class="info-value">{{ ruta.origen }} &rarr; {{ ruta.destino }}</div>
+            </div>
+            <div class="tag-group">
+                <span class="data-tag"><i class="bi bi-clock"></i> {{ ruta.hora_salida|date:"H:i" }}</span>
+                <span class="data-tag"><i class="bi bi-speedometer2"></i> {{ ruta.distancia }} km</span>
+            </div>
+            {% if ruta.conductor %}
+            <div class="action-group">
+              <div class="data-tag" style="border-color: rgba(102, 126, 234, 0.3);">
+                  <i class="bi bi-person"></i> {{ ruta.conductor.nombre }}
+              </div>
+              <a href="{% url 'ruta_detail' ruta.pk %}" class="btn-action btn-view">
+                <i class="bi bi-eye"></i>
+              </a>
+            </div>
+            {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+        <p style="text-align: center; color: rgba(255,255,255,0.5);">Sin rutas asignadas.</p>
+    {% endif %}
+  </div>
+
+  <div style="text-align: center;">
+    <a href="{% url 'autobus_list' %}" class="btn-action btn-view"><i class="bi bi-arrow-left"></i> Volver</a>
   </div>
 </div>
 {% endblock %}
