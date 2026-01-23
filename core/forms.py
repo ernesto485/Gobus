@@ -1,5 +1,5 @@
 from django import forms
-from .models import Autobus, Ruta, Conductor
+from .models import Autobus, Ruta, Conductor, Billete
 
 
 class AutobusForm(forms.ModelForm):
@@ -105,6 +105,44 @@ class ConductorForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Ej: LIC-12345',
                 'required': True
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = field.widget.attrs.get('class', '') + ' modern-input'
+
+class BilleteForm(forms.ModelForm):
+    class Meta:
+        model = Billete
+        fields = ['usuario', 'ruta', 'asiento', 'precio', 'codigo_qr']
+        widgets = {
+            'usuario': forms.Select(attrs={
+                'class': 'form-control',
+                'required': True
+            }),
+            'ruta': forms.Select(attrs={
+                'class': 'form-control',
+                'required': True
+            }),
+            'asiento': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ej: 12',
+                'min': '1',
+                'required': True
+            }),
+            'precio': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ej: 25.00',
+                'step': '0.01',
+                'min': '0',
+                'required': True
+            }),
+            'codigo_qr': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Código QR generado',
+                'required': False
             }),
         }
 

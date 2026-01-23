@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
 from django.core.paginator import Paginator
-from .models import Autobus, Ruta, Conductor
-from .forms import AutobusForm, RutaForm, ConductorForm
+from .models import Autobus, Ruta, Conductor, Billete
+from .forms import AutobusForm, RutaForm, ConductorForm, BilleteForm
 
 @login_required
 def home(request):
@@ -273,3 +273,86 @@ def conductor_detail(request, pk):
         'title': f'Detalles del Conductor {conductor.nombre}'
     }
     return render(request, 'core/conductores/conductor_detail.html', context)
+
+# CRUD Views for Billete
+@login_required
+def billete_list(request):
+    billetes = Billete.objects.all().order_by('-fecha_compra')
+    paginator = Paginator(billetes, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        'title': 'Gestión de Billetes',
+        'is_paginated': page_obj.has_other_pages()
+    }
+    return render(request, 'core/billetes/billete_list.html', context)
+
+
+@login_required
+def billete_create(request):
+    if request.method == 'POST':
+        form = BilleteForm(request.POST)
+        if form.is_valid():
+            billete = form.save()
+            messages.success(request, f'Billete #{billete.id} creado exitosamente.')
+            return redirect('billete_list')
+    else:
+        form = BilleteForm()
+
+    context = {
+        'form': form,
+        'title': 'Crear Billete',
+        'action': 'Crear'
+    }
+    return render(request, 'core/billetes/billete_form.html', context)
+
+
+@login_required
+def billete_edit(request, pk):
+    billete = get_object_or_404(Billete, pk=pk)
+
+    if request.method == 'POST':
+        form = BilleteForm(request.POST, instance=billete)
+        if form.is_valid():
+            billete = form.save()
+            messages.success(request, f'Billete #{billete.id} actualizado exitosamente.')
+            return redirect('billete_list')
+    else:
+        form = BilleteForm(instance=billete)
+
+    context = {
+        'form': form,
+        'billete': billete,
+        'title': 'Editar Billete',
+        'action': 'Actualizar'
+    }
+    return render(request, 'core/billetes/billete_form.html', context)
+
+
+@login_required
+def billete_delete(request, pk):
+    billete = get_object_or_404(Billete, pk=pk)
+
+    if request.method == 'POST':
+        billete.delete()
+        messages.success(request, f'Billete #{pk} eliminado exitosamente.')
+        return redirect('billete_list')
+
+    context = {
+        'billete': billete,
+        'title': 'Eliminar Billete'
+    }
+    return render(request, 'core/billetes/billete_confirm_delete.html', context)
+
+
+@login_required
+def billete_detail(request, pk):
+    billete = get_object_or_404(Billete, pk=pk)
+
+    context = {
+        'billete': billete,
+        'title': f'Detalles del Billete #{billete.id}'
+    }
+    return render(request, 'core/billetes/billete_detail.html', context)

@@ -24,4 +24,13 @@ urlpatterns = [
     path('conductores/<int:pk>/', views.conductor_detail, name='conductor_detail'),
     path('conductores/<int:pk>/editar/', views.conductor_edit, name='conductor_edit'), 
     path('conductores/<int:pk>/eliminar/', views.conductor_delete, name='conductor_delete'), 
+
+    # Billetes CRUD URLs
+    path('billetes/', views.billete_list, name='billete_list'),
+    path('billetes/crear/', views.billete_create, name='billete_create'),
+    path('billetes/<int:pk>/editar/', views.billete_edit, name='billete_edit'),
+    path('billetes/<int:pk>/eliminar/', views.billete_delete, name='billete_delete'),
+    path('billetes/<int:pk>/', views.billete_detail, name='billete_detail'),
+
+
 ]

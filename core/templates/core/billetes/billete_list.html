@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+<link href="{% static 'core/css/home-modern.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/crud.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="crud-container">
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="page-header">
+    <h1 class="page-title">{{ title }}</h1>
+    <a href="{% url 'billete_create' %}" class="btn-create">
+      <i class="bi bi-plus-circle"></i>
+      Nuevo Billete
+    </a>
+  </div>
+
+  {% if page_obj %}
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="modern-table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Ruta</th>
+              <th>Asiento</th>
+              <th>Precio</th>
+              <th>Fecha Compra</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for billete in page_obj %}
+              <tr>
+                <td data-label="Usuario">
+                  <div class="billete-cell">
+                    <i class="bi bi-person"></i>
+                    {{ billete.usuario.username }}
+                  </div>
+                </td>
+                <td data-label="Ruta">
+                  <div class="ruta-cell">
+                    <i class="bi bi-sign-turn-right"></i>
+                    {{ billete.ruta.origen }} → {{ billete.ruta.destino }}
+                  </div>
+                </td>
+                <td data-label="Asiento">
+                  <div class="asiento-cell">
+                    <i class="bi bi-chair"></i>
+                    {{ billete.asiento }}
+                  </div>
+                </td>
+                <td data-label="Precio">
+                  <div class="precio-cell">
+                    <i class="bi bi-cash"></i>
+                    {{ billete.precio }} CUP
+                  </div>
+                </td>
+                <td data-label="Fecha Compra">
+                  <div class="fecha-cell">
+                    <i class="bi bi-calendar"></i>
+                    {{ billete.fecha_compra|date:"d/m/Y H:i" }}
+                  </div>
+                </td>
+                <td data-label="Acciones">
+                  <div class="action-cell">
+                    <a href="{% url 'billete_detail' billete.pk %}" class="btn-action btn-view">
+                      <i class="bi bi-eye"></i> Ver
+                    </a>
+                    <a href="{% url 'billete_edit' billete.pk %}" class="btn-action btn-edit">
+                      <i class="bi bi-pencil"></i> Editar
+                    </a>
+                    <a href="{% url 'billete_delete' billete.pk %}" class="btn-action btn-delete">
+                      <i class="bi bi-trash"></i> Eliminar
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    {% if is_paginated %}
+      <div class="pagination-container">
+        <div class="pagination">
+          {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; Primera</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+          {% endif %}
+
+          <span class="current">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+          </span>
+
+          {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="empty-state">
+      <i class="bi bi-ticket-perforated"></i>
+      <h3>No hay billetes registrados</h3>
+      <p>Comienza agregando tu primer billete al sistema.</p>
+      <a href="{% url 'billete_create' %}" class="btn-create">
+        <i class="bi bi-plus-circle"></i>
+        Crear Primer Billete
+      </a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+<link href="{% static 'core/css/home-modern.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/crud.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+  <div class="detail-header">
+    <h1 class="detail-title">{{ title }}</h1>
+  </div>
+
+  <div class="detail-content">
+    <div class="billete-info-card">
+      <div class="billete-main-icon">
+        <i class="bi bi-ticket-perforated"></i>
+      </div>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-icon"><i class="bi bi-person"></i></div>
+          <div class="info-content">
+            <div class="info-label">Usuario</div>
+            <div class="info-value">{{ billete.usuario.username }}</div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon"><i class="bi bi-sign-turn-right"></i></div>
+          <div class="info-content">
+            <div class="info-label">Ruta</div>
+            <div class="info-value">{{ billete.ruta.origen }} → {{ billete.ruta.destino }}</div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon"><i class="bi bi-chair"></i></div>
+          <div class="info-content">
+            <div class="info-label">Asiento</div>
+            <div class="info-value">{{ billete.asiento }}</div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon"><i class="bi bi-cash"></i></div>
+          <div class="info-content">
+            <div class="info-label">Precio</div>
+            <div class="info-value">{{ billete.precio }} CUP</div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon"><i class="bi bi-calendar"></i></div>
+          <div class="info-content">
+            <div class="info-label">Fecha de Compra</div>
+            <div class="info-value">{{ billete.fecha_compra|date:"d/m/Y H:i" }}</div>
+          </div>
+        </div>
+
+        {% if billete.codigo_qr %}
+        <div class="info-item">
+          <div class="info-icon"><i class="bi bi-qr-code"></i></div>
+          <div class="info-content">
+            <div class="info-label">Código QR</div>
+            <div class="info-value">{{ billete.codigo_qr }}</div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="action-buttons">
+        <a href="{% url 'billete_edit' billete.pk %}" class="btn-action btn-edit">
+          <i class="bi bi-pencil"></i> Editar
+        </a>
+        <a href="{% url 'billete_delete' billete.pk %}" class="btn-action btn-delete">
+          <i class="bi bi-trash"></i> Eliminar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 2rem; padding: 0 2rem;">
+    <a href="{% url 'billete_list' %}" class="btn-action btn-back" style="max-width: 300px; margin: 0 auto;">
+      <i class="bi bi-arrow-left"></i> Volver a la Lista
+    </a>
+  </div>
+</div>
+{% endblock %}
