@@ -12,8 +12,8 @@ from .forms import AutobusForm, RutaForm, ConductorForm, BilleteForm
 def home(request):
     num_autobuses = Autobus.objects.count()
     num_rutas = Ruta.objects.count()
-    num_conductores = 48  # valor fijo por ahora
-    num_billetes_mes = 0   # si no hay modelo Billete, dejar 0 o un valor fijo
+    num_conductores = Conductor.objects.count()  # valor fijo por ahora
+    num_billetes_mes = Billete.objects.count()   # si no hay modelo Billete, dejar 0 o un valor fijo
 
     context = {
         'num_autobuses': num_autobuses,
