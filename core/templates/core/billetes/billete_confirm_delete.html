@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+<link href="{% static 'core/css/home-modern.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/crud.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="delete-container">
+  <div class="delete-card">
+    <div class="delete-icon">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+    </div>
+    
+    <h1 class="delete-title">{{ title }}</h1>
+    <p class="delete-message">
+      ¿Estás seguro de que deseas eliminar este billete? Esta acción no se puede deshacer.
+    </p>
+
+    <div class="billete-info">
+      <div class="info-row">
+        <span class="info-label">Usuario:</span>
+        <span class="info-value">{{ billete.usuario.username }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Ruta:</span>
+        <span class="info-value">{{ billete.ruta.origen }} → {{ billete.ruta.destino }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Asiento:</span>
+        <span class="info-value">{{ billete.asiento }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Precio:</span>
+        <span class="info-value">{{ billete.precio }} CUP</span>
+      </div>
+    </div>
+
+    <form method="post" class="delete-form">
+      {% csrf_token %}
+      <button type="submit" class="btn-confirm">
+        <i class="bi bi-trash"></i>
+        Sí, Eliminar Billete
+      </button>
+      <a href="{% url 'billete_detail' billete.pk %}" class="btn-cancel">
+        <i class="bi bi-x-circle"></i>
+        Cancelar
+      </a>
+    </form>
+  </div>
+</div>
+{% endblock %}

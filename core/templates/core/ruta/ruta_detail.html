@@ -9,167 +9,59 @@
 
 {% block content %}
 <div class="detail-container">
-  <div class="detail-header">
-    <h1 class="detail-title">{{ title }}</h1>
-  </div>
+  <div class="detail-header"><h1 class="detail-title">{{ title }}</h1></div>
 
-  <div class="detail-content">
-    <div class="ruta-info-card">
-      <div class="ruta-main-icon">
-        <i class="bi bi-sign-turn-right"></i>
-      </div>
-      
-      <div class="ruta-destino">
-        <i class="bi bi-geo-alt"></i>
-        {{ ruta.origen }} → {{ ruta.destino }}
-      </div>
-      
-      <div class="info-grid">
-        <div class="info-item">
-          <div class="info-icon">
-            <i class="bi bi-clock"></i>
-          </div>
-          <div class="info-content">
-            <div class="info-label">Hora de Salida</div>
-            <div class="info-value">{{ ruta.hora_salida|date:"d/m/Y H:i" }}</div>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <div class="info-icon">
-            <i class="bi bi-speedometer2"></i>
-          </div>
-          <div class="info-content">
-            <div class="info-label">Distancia</div>
-            <div class="info-value">{{ ruta.distancia }} km</div>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <div class="info-icon">
-            <i class="bi bi-arrow-repeat"></i>
-          </div>
-          <div class="info-content">
-            <div class="info-label">Frecuencia</div>
-            <div class="info-value">{{ ruta.frecuencia }}</div>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <div class="info-icon">
-            <i class="bi bi-calendar"></i>
-          </div>
-          <div class="info-content">
-            <div class="info-label">Fecha de Registro</div>
-            <div class="info-value">{{ ruta.fecha_creacion|date:"d/m/Y H:i" }}</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="action-buttons">
-        <a href="{% url 'ruta_edit' ruta.pk %}" class="btn-action btn-edit">
-          <i class="bi bi-pencil"></i> Editar
-        </a>
-        <a href="{% url 'ruta_delete' ruta.pk %}" class="btn-action btn-delete">
-          <i class="bi bi-trash"></i> Eliminar
-        </a>
-      </div>
+  <div class="glass-card">
+    <div class="main-icon-circle"><i class="bi bi-sign-turn-right"></i></div>
+    <div style="text-align: center; margin-bottom: 1rem;">
+        <h2 style="color: white;">{{ ruta.origen }} <span style="color: #667eea;">&rarr;</span> {{ ruta.destino }}</h2>
     </div>
 
-    <div class="assignments-card">
-      <h2 class="section-title">
-        <i class="bi bi-people"></i>
-        Asignaciones
-      </h2>
-      
-      <div class="assignment-item">
-        <div class="assignment-header">
-          <div class="assignment-title">
-            <i class="bi bi-bus-front"></i>
-            Autobus Asignado
-          </div>
-          {% if ruta.autobus %}
-            <span class="assignment-status assigned">Asignado</span>
-          {% else %}
-            <span class="assignment-status unassigned">Sin asignar</span>
-          {% endif %}
-        </div>
-        {% if ruta.autobus %}
-          <div class="assignment-details">
-            <div class="assignment-tag">
-              <i class="bi bi-card-text"></i>
-              {{ ruta.autobus.matricula }}
-            </div>
-            <div class="assignment-tag">
-              <i class="bi bi-truck"></i>
-              {{ ruta.autobus.modelo }}
-            </div>
-            <div class="assignment-tag">
-              <i class="bi bi-people"></i>
-              {{ ruta.autobus.capacidad }} pasajeros
-            </div>
-          </div>
-        {% else %}
-          <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">
-            No hay autobus asignado a esta ruta.
-          </div>
-        {% endif %}
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-clock"></i></div>
+        <div class="info-content"><span class="info-label">Salida</span><div class="info-value">{{ ruta.hora_salida|date:"H:i" }}</div></div>
       </div>
-
-      <div class="assignment-item">
-        <div class="assignment-header">
-          <div class="assignment-title">
-            <i class="bi bi-person-badge"></i>
-            Conductor Asignado
-          </div>
-          {% if ruta.conductor %}
-            <span class="assignment-status assigned">Asignado</span>
-          {% else %}
-            <span class="assignment-status unassigned">Sin asignar</span>
-          {% endif %}
-        </div>
-        {% if ruta.conductor %}
-          <div class="assignment-details">
-            <div class="assignment-tag">
-              <i class="bi bi-person"></i>
-              {{ ruta.conductor.nombre }}
-            </div>
-            <div class="assignment-tag">
-              <i class="bi bi-card-text"></i>
-              {{ ruta.conductor.licencia }}
-            </div>
-          </div>
-        {% else %}
-          <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">
-            No hay conductor asignado a esta ruta.
-          </div>
-        {% endif %}
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-speedometer2"></i></div>
+        <div class="info-content"><span class="info-label">Distancia</span><div class="info-value">{{ ruta.distancia }} km</div></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon"><i class="bi bi-arrow-repeat"></i></div>
+        <div class="info-content"><span class="info-label">Frecuencia</span><div class="info-value">{{ ruta.frecuencia }}</div></div>
       </div>
     </div>
-
-    {% if ruta.paradas %}
-      <div class="paradas-section">
-        <h2 class="section-title">
-          <i class="bi bi-signpost-2"></i>
-          Paradas Intermedias
-        </h2>
-        
-        <div class="paradas-list">
-          {% for parada in ruta.paradas %}
-            <div class="parada-item">
-              <i class="bi bi-geo-alt-fill"></i>
-              {{ parada }}
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    {% endif %}
+    
+    <div class="action-buttons">
+      <a href="{% url 'ruta_edit' ruta.pk %}" class="btn-action btn-edit"><i class="bi bi-pencil"></i> Editar</a>
+      <a href="{% url 'ruta_delete' ruta.pk %}" class="btn-action btn-delete"><i class="bi bi-trash"></i> Eliminar</a>
+    </div>
   </div>
 
-  <div style="text-align: center; margin-top: 2rem; padding: 0 2rem;">
-    <a href="{% url 'ruta_list' %}" class="btn-action btn-back" style="max-width: 300px; margin: 0 auto;">
-      <i class="bi bi-arrow-left"></i> Volver a la Lista
-    </a>
+  <div class="glass-card">
+     <h3 class="section-title"><i class="bi bi-people-fill"></i> Recursos Asignados</h3>
+     <div class="list-item-card">
+        <div>
+            <span class="info-label">Autobus</span>
+            {% if ruta.autobus %}
+                <div class="info-value">{{ ruta.autobus.matricula }}</div>
+            {% else %}
+                <div class="info-value" style="color: #ff6a6a;">No asignado</div>
+            {% endif %}
+        </div>
+        <div>
+            <span class="info-label">Conductor</span>
+            {% if ruta.conductor %}
+                <div class="info-value">{{ ruta.conductor.nombre }}</div>
+            {% else %}
+                <div class="info-value" style="color: #ff6a6a;">No asignado</div>
+            {% endif %}
+        </div>
+     </div>
+  </div>
+  
+  <div style="text-align: center;">
+    <a href="{% url 'ruta_list' %}" class="btn-action btn-view"><i class="bi bi-arrow-left"></i> Volver</a>
   </div>
 </div>
 {% endblock %}
