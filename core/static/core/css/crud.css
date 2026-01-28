@@ -23,7 +23,7 @@
 }
 
 .page-title {
-  font-size: 2.0rem;
+  font-size: 2rem;
   font-weight: 700;
   color: white;
   margin: 0;
@@ -48,9 +48,11 @@
   /* Un poco más de espacio interno */
 
   /* CAMBIO PRINCIPAL: Fondo con degradado sutil en lugar de plano */
-  background: linear-gradient(145deg,
-      rgba(30, 41, 59, 0.7) 0%,
-      rgba(15, 23, 42, 0.6) 100%);
+  background: linear-gradient(
+    145deg,
+    rgba(30, 41, 59, 0.7) 0%,
+    rgba(15, 23, 42, 0.6) 100%
+  );
 
   /* Efecto de cristal más fuerte */
   backdrop-filter: blur(20px);
@@ -70,7 +72,6 @@
   transition: transform 0.3s ease;
 }
 
-
 .table-container::before {
   content: "";
   position: absolute;
@@ -78,10 +79,12 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg,
-      transparent 0%,
-      #667eea 50%,
-      transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #667eea 50%,
+    transparent 100%
+  );
   opacity: 0.8;
   box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
 }
@@ -134,8 +137,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.modern-table>thead>tr>:last-child {
-
+.modern-table > thead > tr > :last-child {
   text-align: center;
 }
 
@@ -214,7 +216,7 @@
   border-radius: 10px;
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.80rem;
+  font-size: 0.8rem;
   transition: all 0.18s ease;
   display: inline-flex;
   align-items: center;
@@ -423,12 +425,16 @@
   min-height: 100vh;
   background: #0a0e27;
   background-image:
-    radial-gradient(circle at 20% 50%,
+    radial-gradient(
+      circle at 20% 50%,
       rgba(120, 119, 198, 0.3) 0%,
-      transparent 50%),
-    radial-gradient(circle at 80% 80%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
       rgba(255, 119, 198, 0.3) 0%,
-      transparent 50%);
+      transparent 50%
+    );
   background-attachment: fixed;
   padding: 2rem 0;
   display: flex;
@@ -540,17 +546,18 @@
 
 /* Estilos específicos para select - hace el dropdown visible */
 .form-card select option {
- background-color: #1a1a2e;
+  background-color: #1a1a2e;
   color: #ffffff;
   padding: 0.5rem;
 }
 
 .form-card select option:checked {
-  background: linear-gradient(#667eea, #667eea), linear-gradient(to right, #667eea, #667eea);
+  background:
+    linear-gradient(#667eea, #667eea),
+    linear-gradient(to right, #667eea, #667eea);
   background-color: #667eea !important;
   color: #ffffff;
 }
-
 
 .form-actions {
   display: flex;
@@ -794,13 +801,22 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
 }
 
 .main-icon-circle {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1116,4 +1132,8 @@
     width: 100%;
     justify-content: center;
   }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
 }

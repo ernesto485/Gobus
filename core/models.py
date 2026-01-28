@@ -38,8 +38,11 @@ class Ruta(models.Model):
 
 
 class Billete(models.Model):
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="billetes")
-    ruta = models.ForeignKey(Ruta, on_delete=models.PROTECT, related_name="billetes")
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, 
+                                on_delete=models.CASCADE, 
+                                related_name="billetes")
+    ruta = models.ForeignKey(Ruta, on_delete=models.PROTECT, 
+                             related_name="billetes")
     asiento = models.PositiveIntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     fecha_compra = models.DateTimeField(auto_now_add=True)
